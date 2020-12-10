@@ -14,6 +14,9 @@ const bootcamps = require("./routes/bootcamps");
 
 const app = express();
 
+// body parser
+app.use(express.json());
+
 // dev logging middleware
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -22,7 +25,7 @@ if (process.env.NODE_ENV === "development") {
 // mount routers
 app.use("/api/v1/bootcamps", bootcamps);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 app.listen(
   PORT,
@@ -32,9 +35,9 @@ app.listen(
   )
 );
 
-// handle unhandled promise rejection
+// Handle unhandled promise rejections
 process.on("unhandledRejection", (err, promise) => {
   console.log(`Error: ${err.message}`.red);
-  // close server connection and exit the app
-  server.close(() => process.exit(1));
+  // Close server & exit process
+  // server.close(() => process.exit(1));
 });
