@@ -2,6 +2,7 @@ const express = require("express");
 const nastaveni = require("dotenv");
 const morgan = require("morgan");
 const colors = require("colors");
+const errorHandler = require("./middleware/error");
 const connectDB = require("./config/db");
 // setting up the config file to load
 nastaveni.config({ path: "./config/config.env" });
@@ -24,6 +25,9 @@ if (process.env.NODE_ENV === "development") {
 
 // mount routers
 app.use("/api/v1/bootcamps", bootcamps);
+
+// error handler
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 
